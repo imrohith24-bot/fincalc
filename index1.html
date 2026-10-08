@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Calculators</title>
+  <link rel="stylesheet" href="style1.css" />
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>FinCalc</h1>
+          <span>Smart Finance Tools</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-btn active" data-tab="sip">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+          <span>SIP Calculator</span>
+        </button>
+
+        <button class="nav-btn" data-tab="emi">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <line x1="2" y1="10" x2="22" y2="10"></line>
+          </svg>
+          <span>EMI Calculator</span>
+        </button>
+
+        <button class="nav-btn" data-tab="loan">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"></path>
+            <path d="M3 10h18"></path>
+            <path d="M5 6l7-3 7 3"></path>
+            <path d="M4 10v11"></path>
+            <path d="M20 10v11"></path>
+            <path d="M8 14v4"></path>
+            <path d="M12 14v4"></path>
+            <path d="M16 14v4"></path>
+          </svg>
+          <span>Loan Calculator</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Instant financial projections</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="content-panel">
+      <!-- 1. SIP CALCULATOR TAB -->
+      <section class="calculator-view active" id="sipView">
+        <header class="view-header">
+          <h2>SIP Calculator</h2>
+          <p>Estimate the growth of your systematic investments over time</p>
+        </header>
+
+        <div class="calc-grid">
+          <div class="inputs-section">
+            <div class="input-group">
+              <div class="label-row">
+                <label for="sipInvestmentInput">Monthly Investment</label>
+                <div class="value-box">
+                  <span>₹</span>
+                  <input type="number" id="sipInvestmentInput" value="5000" min="500" max="1000000" step="500" />
+                </div>
+              </div>
+              <input type="range" id="sipInvestmentSlider" min="500" max="100000" step="500" value="5000" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="sipReturnInput">Expected Return Rate (p.a)</label>
+                <div class="value-box">
+                  <input type="number" id="sipReturnInput" value="12" min="1" max="30" step="0.5" />
+                  <span>%</span>
+                </div>
+              </div>
+              <input type="range" id="sipReturnSlider" min="1" max="30" step="0.5" value="12" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="sipTenureInput">Time Period</label>
+                <div class="value-box">
+                  <input type="number" id="sipTenureInput" value="10" min="1" max="40" step="1" />
+                  <span>Yr</span>
+                </div>
+              </div>
+              <input type="range" id="sipTenureSlider" min="1" max="40" step="1" value="10" class="slider" />
+            </div>
+          </div>
+
+          <div class="results-card">
+            <div class="result-tile">
+              <span class="result-label">Invested Amount</span>
+              <span class="result-value" id="sipInvestedAmount">₹0</span>
+            </div>
+            <div class="result-tile">
+              <span class="result-label">Est. Returns</span>
+              <span class="result-value text-green" id="sipEstReturns">₹0</span>
+            </div>
+            <div class="result-tile highlight">
+              <span class="result-label">Total Value</span>
+              <span class="result-value large text-blue" id="sipTotalValue">₹0</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-segment color-slate" id="sipProgressInvested" style="width: 50%;"></div>
+                <div class="progress-segment color-green" id="sipProgressReturns" style="width: 50%;"></div>
+              </div>
+              <div class="legend">
+                <div class="legend-item"><span class="dot dot-slate"></span> Invested</div>
+                <div class="legend-item"><span class="dot dot-green"></span> Gain</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. EMI CALCULATOR TAB -->
+      <section class="calculator-view" id="emiView">
+        <header class="view-header">
+          <h2>EMI Calculator</h2>
+          <p>Compute your exact monthly installment and interest distribution</p>
+        </header>
+
+        <div class="calc-grid">
+          <div class="inputs-section">
+            <div class="input-group">
+              <div class="label-row">
+                <label for="emiAmountInput">Loan Amount</label>
+                <div class="value-box">
+                  <span>₹</span>
+                  <input type="number" id="emiAmountInput" value="500000" min="10000" max="10000000" step="10000" />
+                </div>
+              </div>
+              <input type="range" id="emiAmountSlider" min="10000" max="2000000" step="10000" value="500000" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="emiRateInput">Interest Rate (p.a)</label>
+                <div class="value-box">
+                  <input type="number" id="emiRateInput" value="9" min="1" max="25" step="0.25" />
+                  <span>%</span>
+                </div>
+              </div>
+              <input type="range" id="emiRateSlider" min="1" max="25" step="0.25" value="9" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="emiTenureInput">Tenure</label>
+                <div class="value-box">
+                  <input type="number" id="emiTenureInput" value="5" min="1" max="30" step="1" />
+                  <span>Yr</span>
+                </div>
+              </div>
+              <input type="range" id="emiTenureSlider" min="1" max="30" step="1" value="5" class="slider" />
+            </div>
+          </div>
+
+          <div class="results-card">
+            <div class="result-tile highlight-top">
+              <span class="result-label">Monthly EMI</span>
+              <span class="result-value large text-blue" id="emiMonthly">₹0</span>
+            </div>
+            <div class="result-tile">
+              <span class="result-label">Principal Loan Amount</span>
+              <span class="result-value" id="emiPrincipal">₹0</span>
+            </div>
+            <div class="result-tile">
+              <span class="result-label">Total Interest Payable</span>
+              <span class="result-value text-amber" id="emiInterest">₹0</span>
+            </div>
+            <div class="result-tile highlight">
+              <span class="result-label">Total Payment (Principal + Int)</span>
+              <span class="result-value" id="emiTotal">₹0</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-segment color-slate" id="emiProgressPrincipal" style="width: 50%;"></div>
+                <div class="progress-segment color-amber" id="emiProgressInterest" style="width: 50%;"></div>
+              </div>
+              <div class="legend">
+                <div class="legend-item"><span class="dot dot-slate"></span> Principal</div>
+                <div class="legend-item"><span class="dot dot-amber"></span> Interest</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. LOAN CALCULATOR TAB -->
+      <section class="calculator-view" id="loanView">
+        <header class="view-header">
+          <h2>Loan Calculator</h2>
+          <p>Determine total cost of borrowing with customizable processing fee</p>
+        </header>
+
+        <div class="calc-grid">
+          <div class="inputs-section">
+            <div class="input-group">
+              <div class="label-row">
+                <label for="loanAmountInput">Principal Amount</label>
+                <div class="value-box">
+                  <span>₹</span>
+                  <input type="number" id="loanAmountInput" value="1000000" min="20000" max="20000000" step="20000" />
+                </div>
+              </div>
+              <input type="range" id="loanAmountSlider" min="20000" max="5000000" step="20000" value="1000000" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="loanRateInput">Annual Interest Rate</label>
+                <div class="value-box">
+                  <input type="number" id="loanRateInput" value="8.5" min="1" max="25" step="0.25" />
+                  <span>%</span>
+                </div>
+              </div>
+              <input type="range" id="loanRateSlider" min="1" max="25" step="0.25" value="8.5" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="loanTenureInput">Loan Duration</label>
+                <div class="value-box">
+                  <input type="number" id="loanTenureInput" value="7" min="1" max="30" step="1" />
+                  <span>Yr</span>
+                </div>
+              </div>
+              <input type="range" id="loanTenureSlider" min="1" max="30" step="1" value="7" class="slider" />
+            </div>
+
+            <div class="input-group">
+              <div class="label-row">
+                <label for="loanFeeInput">Processing Fee</label>
+                <div class="value-box">
+                  <input type="number" id="loanFeeInput" value="1" min="0" max="5" step="0.1" />
+                  <span>%</span>
+                </div>
+              </div>
+              <input type="range" id="loanFeeSlider" min="0" max="5" step="0.1" value="1" class="slider" />
+            </div>
+          </div>
+
+          <div class="results-card">
+            <div class="result-tile">
+              <span class="result-label">Monthly Payment</span>
+              <span class="result-value" id="loanMonthly">₹0</span>
+            </div>
+            <div class="result-tile">
+              <span class="result-label">Processing Fee Amount</span>
+              <span class="result-value text-slate" id="loanFeeAmount">₹0</span>
+            </div>
+            <div class="result-tile">
+              <span class="result-label">Total Interest Cost</span>
+              <span class="result-value text-amber" id="loanInterestTotal">₹0</span>
+            </div>
+            <div class="result-tile highlight">
+              <span class="result-label">Overall Outflow (Incl. Fee)</span>
+              <span class="result-value large text-blue" id="loanGrandTotal">₹0</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-segment color-slate" id="loanProgressPrincipal" style="width: 50%;"></div>
+                <div class="progress-segment color-amber" id="loanProgressInterest" style="width: 50%;"></div>
+              </div>
+              <div class="legend">
+                <div class="legend-item"><span class="dot dot-slate"></span> Principal</div>
+                <div class="legend-item"><span class="dot dot-amber"></span> Interest + Fee</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script1.js"></script>
+</body>
+</html>
